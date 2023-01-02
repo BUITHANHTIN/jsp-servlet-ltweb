@@ -20,5 +20,5 @@ public interface IAccountService {
 	String UserExist(String user);
 	
 	boolean updatePass(String user,String pass);
-
+	Account findbyId(int id);
 }

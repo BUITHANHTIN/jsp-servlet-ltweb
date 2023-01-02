@@ -4,9 +4,15 @@ public class Account {
 	int id;
 	String username, user, pass;
 	int isSell, isAdmin;
-	
+	String publicKey;
 
-	
+	public String getPublicKey() {
+		return publicKey;
+	}
+
+	public void setPublicKey(String publicKey) {
+		this.publicKey = publicKey;
+	}
 
 	public String getUsername() {
 		return username;
@@ -15,8 +21,6 @@ public class Account {
 	public void setUsername(String username) {
 		this.username = username;
 	}
-
-	
 
 	public int getId() {
 		return id;
@@ -61,20 +65,5 @@ public class Account {
 	public Account() {
 		super();
 	}
-
-	public Account(int id, String username, String user, String pass, int isSell, int isAdmin) {
-		super();
-		this.id = id;
-		this.user = user;
-		this.pass = pass;
-		this.isSell = isSell;
-		this.isAdmin = isAdmin;
-		this.username = username;
-	}
-
-	
-
-	
-
 
 }

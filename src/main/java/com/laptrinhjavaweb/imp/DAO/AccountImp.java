@@ -25,10 +25,7 @@ public class AccountImp implements IAccount {
 		}
 		return null;
 	}
-	public static void main(String[] args) {
-		AccountImp t = new AccountImp();
-		System.out.println(t.getConnection());
-	}
+
 	
 
 	public List<Account> getOneAccount(String user, String pass) {
@@ -118,13 +115,14 @@ public class AccountImp implements IAccount {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
-			String sql = "INSERT INTO dbo.Account(username,[user],pass,isSell,isAdmin)VALUES(?,?,?,0,?)";
+			String sql = "INSERT INTO dbo.Account(username,[user],pass,isSell,isAdmin,publickey)VALUES(?,?,?,0,?,?)";
 			con.setAutoCommit(false);
 			ps = con.prepareStatement(sql, ps.RETURN_GENERATED_KEYS);
 			ps.setString(1, account.getUsername());
 			ps.setString(2, account.getUser());
 			ps.setString(3, account.getPass());
 			ps.setInt(4, account.getIsAdmin());
+			ps.setString(5, account.getPublicKey());
 
 			ps.executeUpdate();
 			rs = ps.getGeneratedKeys();
@@ -303,8 +301,6 @@ public class AccountImp implements IAccount {
 		return null;
 	}
 
-
-
 	@Override
 	public boolean updatePass(String user, String pass) {
 		Connection con = getConnection();
@@ -336,4 +332,40 @@ public class AccountImp implements IAccount {
 		}
 		return false;
 	}
+
+	@Override
+	public Account findbyId(int id) {
+		Account ac = null;
+		Connection con = getConnection();
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		if (con != null) {
+			try {
+				String sql = "SELECT*FROM dbo.Account WHERE [uID]=?";
+				ps = con.prepareStatement(sql);
+				ps.setInt(1, id);
+				rs = ps.executeQuery();
+				while (rs.next()) {
+					ac = new Account();
+					ac.setPublicKey(rs.getString("publickey"));
+				}
+				return ac;
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					if (ps != null) {
+						ps.close();
+					}
+					if (con != null) {
+						con.close();
+					}
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+			}
+		}
+		return null;
+	}
+	
 }

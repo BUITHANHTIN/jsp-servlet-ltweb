@@ -56,4 +56,10 @@ public class AccountService implements IAccountService {
 		// TODO Auto-generated method stub
 		return account.updatePass(user, pass);
 	}
+
+	@Override
+	public Account findbyId(int id) {
+		// TODO Auto-generated method stub
+		return account.findbyId(id);
+	}
 }

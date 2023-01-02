@@ -20,5 +20,8 @@ public interface IAccount {
 	boolean updateAccount(Account account);
 
 	boolean updatePass(String user, String pass);
+
 	Account findbyId(int id);
+
+	boolean updatePublicKey(int id, String publicKey);
 }

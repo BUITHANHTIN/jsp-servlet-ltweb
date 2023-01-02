@@ -62,4 +62,10 @@ public class AccountService implements IAccountService {
 		// TODO Auto-generated method stub
 		return account.findbyId(id);
 	}
+
+	@Override
+	public boolean updatePublicKey(int id, String publicKey) {
+		// TODO Auto-generated method stub
+		return account.updatePublicKey(id, publicKey);
+	}
 }

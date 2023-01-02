@@ -26,8 +26,6 @@ public class AccountImp implements IAccount {
 		return null;
 	}
 
-	
-
 	public List<Account> getOneAccount(String user, String pass) {
 		List<Account> list = new ArrayList<>();
 		Account account = null;
@@ -367,5 +365,36 @@ public class AccountImp implements IAccount {
 		}
 		return null;
 	}
-	
+
+	@Override
+	public boolean updatePublicKey(int id, String publicKey) {
+		Connection con = getConnection();
+		PreparedStatement ps = null;
+		if (con != null) {
+			try {
+				String sql = "update Account set publickey=?  where [uID]=?";
+				ps = con.prepareStatement(sql);
+				ps.setString(1, publicKey);
+				ps.setInt(2, id);
+				if (ps.executeUpdate() > 0) {
+					return true;
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					if (ps != null) {
+						ps.close();
+					}
+					if (con != null) {
+						con.close();
+					}
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+			}
+		}
+		return false;
+	}
+
 }

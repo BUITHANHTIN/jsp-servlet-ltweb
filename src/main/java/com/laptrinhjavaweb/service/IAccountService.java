@@ -16,9 +16,12 @@ public interface IAccountService {
 	boolean deleteAccount(int id);
 
 	boolean updateAccount(Account account);
-	
+
 	String UserExist(String user);
-	
-	boolean updatePass(String user,String pass);
+
+	boolean updatePass(String user, String pass);
+
 	Account findbyId(int id);
+
+	boolean updatePublicKey(int id, String publicKey);
 }

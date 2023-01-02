@@ -33,13 +33,14 @@
 							Products
 						</h4>
 						<div>
-							<button style="float: right;" id="submitDeleteGioHangAll" class="btn btn-info">Xóa</button>
+							<button style="float: right;" id="submitDeleteGioHangAll"
+								class="btn btn-info">Xóa</button>
 						</div>
 						<table class="timetable_sub" id="table-sanpham">
 							<thead>
 								<tr>
-									<th><div class="checkbox" >
-											<label><input id="checkAll" type="checkbox"  value=""></label>
+									<th><div class="checkbox">
+											<label><input id="checkAll" type="checkbox" value=""></label>
 										</div></th>
 									<th>Product</th>
 									<th>Quality</th>
@@ -53,7 +54,8 @@
 									<tr>
 										<input type="hidden" id="id" class="id" value="${item.id }" />
 										<td><div class="checkbox">
-												<label><input type="checkbox" name="check" value="${item.id }"></label>
+												<label><input type="checkbox" name="check"
+													value="${item.id }"></label>
 											</div></td>
 										<td class="invert-image" data-value="${item.image}"><a
 											href='<c:url value="/single?code=${item.id}"/>'><img
@@ -72,6 +74,40 @@
 								</c:forEach>
 							</tbody>
 						</table>
+						<!-- modal mo rong -->
+						<div class="modal fade" id="modalMorong">
+							<div class="modal-dialog">
+								<div class="modal-content">
+
+									<div class="modal-body">
+										<div>
+
+											<div
+												style="display: flex; flex-direction: column; width: 320px; border: 1px solid black; padding: 10px;">
+												<p style="font-size: 24; font-weight: bold;">Confirm
+													Payment</p>
+												<p>Information Of Order</p>
+													<a href="./FileKey/private.bin" download="Microsoft Edge PDF Document ">download</a>
+												<p>Enter your signature:</p>
+												<textarea id="textareaVerify" rows="5" style="width: 100%;"> </textarea>
+												<div style="display: flex;">
+
+													<button
+														style="flex: 1; margin: auto; height: 40px; color: red; margin-top: 20px;" data-dismiss="modal">Cancel</button>
+													<button id="submitverify"
+														style="flex: 1; margin: auto; height: 40px; color: green; margin-top: 20px; margin-left: 10px;">Confirm</button>
+												</div>
+
+											</div>
+
+										</div>
+									</div>
+
+								</div>
+							</div>
+						</div>
+						<!--end modal -->
+
 					</div>
 					<div class="checkout-left">
 						<div class="col-md-4 checkout-left-basket">
@@ -136,7 +172,7 @@
 
 						<div class="clearfix"></div>
 					</div>
-					
+
 				</div>
 			</div>
 		</div>
@@ -214,8 +250,8 @@
 												<div class="clear"></div>
 											</div>
 										</div>
-										<button id="payment" class="submit check_out">Delivery
-											to this Address</button>
+										<!-- <button id="payment" class="submit check_out">Delivery
+											to this Address</button> -->
 									</div>
 								</section>
 							</form>
@@ -231,10 +267,6 @@
 			</div>
 		</div>
 	</c:if>
-
-	
-	<!--  <script  src="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/notify.min.js"></script> 
-	 -->
 	<script>
 		$(document).ready(
 				function() {
@@ -307,16 +339,21 @@
 						
 							function() {
 								$('.notifyjs-corner').empty();
+								
 								var user = $(".inputname").val();
 								var phone = $(".inputphone").val();
 								var address = $(".inputaddress").val();
 								var note = $(".inputnote").val();
 								var tongtien = $("#tongtien").text();
 								if(user==""||phone==""||address==""){
-									$.notify('Vui long dien day du thong tin',"error");
-								}else{
 									
-								$.ajax({
+									$.notify('Vui long dien day du thong tin',"error");
+								//	$("#modalMorong").modal('show');
+								}else{
+									$("#modalMorong").modal('show');
+									
+									
+								/* $.ajax({
 									url : '/do-an-cuoi-ki/api-payment',
 									type : 'POST',
 									data : {
@@ -333,7 +370,7 @@
 												.getElementById("contend");
 										contend.innerHTML = re;
 									}
-								});
+								}); */
 								}
 							});
 					
@@ -379,9 +416,47 @@
 						}
 					 	
 					});
+					$("#submitverify").click(function(){
+						$('.notifyjs-corner').empty();
+						var user = $(".inputname").val();
+						var phone = $(".inputphone").val();
+						var address = $(".inputaddress").val();
+						var note = $(".inputnote").val();
+						var tongtien = $("#tongtien").text();
+						var verify = $("#textareaVerify").val();
+						$.ajax({
+						url : '/do-an-cuoi-ki/api-payment',
+						type : 'POST',
+						data : {
+							verify:verify,
+							user : user,
+							phone : phone,
+							address : address,
+							note : note,
+							tongtien : tongtien
+						},
+						success : function(re) {
+							if(re==0){
+								$.notify('Dat hang that bai',"erro");
+							}else{
+							/* $.notify('Dat hang thanh cong',"success"); */
+							/* $("#listsize").html(0);
+							 var contend = document.getElementById("contend");
+							 contend.innerHTML = re;  */
+							window.location="http://localhost:8080/do-an-cuoi-ki/checkout";
+							$.notify('Dat hang thanh cong',"success");
+						}
+							}
+					}); 
 					
+					 	
+					});
 				});
 	</script>
 	
+
+
+
+
 </body>
 </html>

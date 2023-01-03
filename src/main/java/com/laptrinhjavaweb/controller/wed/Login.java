@@ -34,7 +34,6 @@ import com.laptrinhjavaweb.model.Account;
 import com.laptrinhjavaweb.service.IAccountService;
 import com.laptrinhjavaweb.service.ICardService;
 import com.laptrinhjavaweb.utils.SessionUtils;
-import com.opensymphony.sitemesh.webapp.decorator.BaseWebAppDecorator;
 
 @WebServlet(urlPatterns = { "/j_security_check" })
 public class Login extends HttpServlet {
@@ -54,7 +53,7 @@ public class Login extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		// code bên form login
+		// code bÃªn form login
 		String code = request.getParameter("code");
 		if (code != null && code.equals("login")) {
 			String mess = request.getParameter("message");
@@ -126,7 +125,7 @@ public class Login extends HttpServlet {
 						request.getContextPath() + "/j_security_check?code=login&message=message&alert-danger=alert");
 			}
 		} else if (action != null && action.equals("registration")) {
-			// kiểm tra có tên trong account ch
+			// kiá»ƒm tra cÃ³ tÃªn trong account ch
 			if (account.UsernameExist(name) != null) {
 				response.sendRedirect(
 						request.getContextPath() + "/j_security_check?code=login&messageRe=messageRegistration");
@@ -144,7 +143,7 @@ public class Login extends HttpServlet {
 				acc.setPass(pass);
 				acc.setIsAdmin(0);
 				acc.setPublicKey(Base64.getEncoder().encodeToString(Key.getPublicKey().getEncoded()));
-				// lưu private
+				// lÆ°u private
 				String path = "E:\\LAPTRINHDAIHOC\\New folder (2)\\jsp-servlet-ltweb-main\\src\\main\\webapp\\FileKey\\private.bin";
 				try {
 					Key.savePrivateKey(Key.getPrivateKey(), path);
@@ -152,7 +151,7 @@ public class Login extends HttpServlet {
 					// TODO Auto-generated catch block
 					e3.printStackTrace();
 				}
-				// insert và gửi mail thành công
+				// insert vÃ  gá»­i mail thÃ nh cÃ´ng
 				long checkInsert = account.InsertAccount(acc);
 //gui mail
 				final String fromEmail = "19130234@st.hcmuaf.edu.vn";
@@ -160,10 +159,10 @@ public class Login extends HttpServlet {
 				final String password = "buithanhtin2001";
 				// dia chi email nguoi nhan
 				final String toEmail = user;
-				final String subject = "Web bán hàng";
+				final String subject = "Web ban hang";
 				BodyPart messageBodyPart1 = new MimeBodyPart();
 				try {
-					messageBodyPart1.setText("Đăng kí thành công");
+					messageBodyPart1.setText("Dang ki thanh cong");
 				} catch (MessagingException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -197,7 +196,7 @@ public class Login extends HttpServlet {
 					e1.printStackTrace();
 				}
 
-				// final String body = "�?ăng kí thành công" + "\n" + Key.privateKey.toString();
+	
 				Properties props = new Properties();
 				props.put("mail.smtp.host", "smtp.gmail.com"); // SMTP Host
 				props.put("mail.smtp.port", "587"); // TLS Port
@@ -218,7 +217,6 @@ public class Login extends HttpServlet {
 					msg.setFrom(new InternetAddress(fromEmail, "NoReply-JD"));
 					msg.setReplyTo(InternetAddress.parse(fromEmail, false));
 					msg.setSubject(subject, "UTF-8");
-					// msg.setText(body, "UTF-8");
 					msg.setContent(multipart);
 					msg.setSentDate(new Date());
 					msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail, false));

@@ -352,11 +352,8 @@
 									
 									$.notify('Vui long dien day du thong tin',"error");
 								//	$("#modalMorong").modal('show');
-								}else{
-									$("#modalMorong").modal('show');
-									
-									
-								/* $.ajax({
+								}else{								
+								 $.ajax({
 									url : '/do-an-cuoi-ki/api-payment',
 									type : 'POST',
 									data : {
@@ -367,13 +364,9 @@
 										tongtien : tongtien
 									},
 									success : function(re) {
-										$.notify('Dat hang thanh cong',"success");
-										$("#listsize").html(0);
-										var contend = document
-												.getElementById("contend");
-										contend.innerHTML = re;
+										$("#modalMorong").modal('show');
 									}
-								}); */
+								}); 
 								}
 							});
 					
@@ -421,22 +414,13 @@
 					});
 					$("#submitverify").click(function(){
 						$('.notifyjs-corner').empty();
-						var user = $(".inputname").val();
-						var phone = $(".inputphone").val();
-						var address = $(".inputaddress").val();
-						var note = $(".inputnote").val();
-						var tongtien = $("#tongtien").text();
 						var verify = $("#textareaVerify").val();
 						$.ajax({
-						url : '/do-an-cuoi-ki/api-payment',
+						url : '/do-an-cuoi-ki/api-verify',
 						type : 'POST',
 						data : {
 							verify:verify,
-							user : user,
-							phone : phone,
-							address : address,
-							note : note,
-							tongtien : tongtien
+							
 						},
 						success : function(re) {
 							if(re==0){
@@ -460,6 +444,9 @@
 						$.ajax({
 						url : '/do-an-cuoi-ki/api-forgotprivate',
 						type : 'POST',
+						data : {
+							
+						},
 						success : function(re) {
 							}
 					}); 

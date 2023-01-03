@@ -8,6 +8,8 @@ public interface IBillService {
 	int insertBill(Bill bill);
 
 	List<Bill> getAllByStatusID(String statusID);
+
 	boolean DeleteBillById(int id);
-	boolean updateBillById(int idBill,int idStatus );
+
+	boolean updateBillById(int idBill, int idStatus);
 }

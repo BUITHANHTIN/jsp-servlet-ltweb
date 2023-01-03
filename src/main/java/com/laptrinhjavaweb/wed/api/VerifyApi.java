@@ -2,33 +2,34 @@ package com.laptrinhjavaweb.wed.api;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.SignatureException;
+import java.security.spec.InvalidKeySpecException;
+import java.util.Base64;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.servlet.GenericServlet;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.laptrinhjavaweb.controller.wed.Key;
 import com.laptrinhjavaweb.model.Account;
-import com.laptrinhjavaweb.model.Bill;
-import com.laptrinhjavaweb.model.CT_Bill;
 import com.laptrinhjavaweb.model.Card;
 import com.laptrinhjavaweb.service.IAccountService;
 import com.laptrinhjavaweb.service.IBillService;
 import com.laptrinhjavaweb.service.ICT_BillService;
 import com.laptrinhjavaweb.service.ICardService;
-import com.laptrinhjavaweb.service.IFilePdfService;
-import com.laptrinhjavaweb.utils.CreatePdf;
 import com.laptrinhjavaweb.utils.SessionUtils;
 
 /**
  * Servlet implementation class PaymentApi
  */
-@WebServlet("/api-payment")
-public class PaymentApi extends HttpServlet {
+@WebServlet("/api-verify")
+public class VerifyApi extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	@Inject
 	IBillService bill;
@@ -38,13 +39,11 @@ public class PaymentApi extends HttpServlet {
 	ICardService card;
 	@Inject
 	IAccountService accountService;
-	@Inject
-	IFilePdfService filePdfService;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public PaymentApi() {
+	public VerifyApi() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -57,48 +56,29 @@ public class PaymentApi extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		int idOfCompute = 0;
+		
 		PrintWriter out = response.getWriter();
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/plain");
-		String note = request.getParameter("note");
-		String user = request.getParameter("user");
-		String phone = request.getParameter("phone");
-		String address = request.getParameter("address");
-		String tongtien = request.getParameter("tongtien");
+		String verify = request.getParameter("verify").trim();
 		Account acount = (Account) SessionUtils.getInstance().getValue(request, "USERMODEL");
 		List<Card> listCart = (List<Card>) SessionUtils.getInstance().getValue(request, "giohangs");
 		Account ac = accountService.findbyId(acount.getId());
-
-		Bill new_bill = null;
-		int idBill=0;
-		// trang thai cua hang(ch giao)
-		int idStatus = 1;
-		boolean check = true;
-		if (!listCart.isEmpty()) {
-			if (acount != null) {
-				new_bill = new Bill(acount.getId(), user, phone, tongtien, listCart.size(), address, note, idStatus);
-				check = true;
-			} else {
-				new_bill = new Bill(idOfCompute, user, phone, tongtien, listCart.size(), address, note, idStatus);
-				check = false;
-			}
-			 idBill = bill.insertBill(new_bill);
-			for (Card card : listCart) {
-				CT_Bill ct_Bill = new CT_Bill(idBill, card.getId(), card.getName(), card.getImage(),
-						String.valueOf(card.getPrice()), card.getCount());
-				ctbill.insert_CT_Bill(ct_Bill);
-
-			}
+		int re = 0;
+		try {
+			byte[] m = Base64.getDecoder().decode(verify);
+			re = Key.verify(Key.publicKeyFromBase64(ac.getPublicKey()), m);
+		} catch (InvalidKeyException | NoSuchAlgorithmException | SignatureException | InvalidKeySpecException e) {
+			e.printStackTrace();
 		}
+		if (re == 0) {
+			out.print(0);
+		} else {
 
-		// TAO FILE PDF
-		String path = "E:\\LAPTRINHDAIHOC\\New folder (2)\\jsp-servlet-ltweb-main\\src\\main\\webapp\\FileKey\\file.pdf";
-		//String pathInfo =  request.getServletPath();
-      //  System.out.println("path Info: " + pathInfo);
-      //  Invoice invoice = new Invoice(pathInfo + "/" + "times.ttf");
-		CreatePdf createPdf = new CreatePdf(path);
-		createPdf.writeInvoice(path,filePdfService.findById(idBill));
+			SessionUtils.getInstance().removeValue(request, "giohangs");
+
+			card.DeleteCard(acount.getId());
+		}
 
 	}
 

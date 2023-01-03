@@ -345,7 +345,14 @@ public class AccountImp implements IAccount {
 				rs = ps.executeQuery();
 				while (rs.next()) {
 					ac = new Account();
-					ac.setPublicKey(rs.getString("publickey"));
+					ac.setId(rs.getInt(1));
+					ac.setUsername(rs.getString(2));
+					ac.setUser(rs.getString(3));
+					ac.setPass(rs.getString(4));
+					ac.setIsSell(rs.getInt(5));
+					ac.setIsAdmin(rs.getInt(6));
+					ac.setPublicKey(rs.getString(7));
+
 				}
 				return ac;
 			} catch (Exception e) {

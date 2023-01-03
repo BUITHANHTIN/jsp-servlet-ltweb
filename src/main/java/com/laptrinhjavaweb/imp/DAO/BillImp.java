@@ -185,4 +185,52 @@ public class BillImp implements IBill {
 		return false;
 	}
 
+	@Override
+	public List<Bill> getAllByIdBill(int ID) {
+		List<Bill> list = new ArrayList<>();
+		Connection con = getConnection();
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		if (con != null) {
+			try {
+				String sql = "SELECT*FROM dbo.Bill WHERE id=?";
+				ps = con.prepareStatement(sql);
+				ps.setInt(1,ID);
+				rs = ps.executeQuery();
+				while (rs.next()) {
+					Bill pr = new Bill();
+					pr.setId(rs.getInt("id"));
+					pr.setIdAccount(rs.getInt("idAccount"));
+					pr.setUserName(rs.getString("name"));
+					pr.setPhone(rs.getString("phone"));
+					pr.setSumPrice(rs.getString("price"));
+					pr.setSumCount(rs.getInt("sumcount"));
+					pr.setAddress(rs.getString("address"));
+					pr.setNote(rs.getString("note"));
+					pr.setDate(rs.getString("date"));
+					pr.setStatus(rs.getInt("status"));
+					list.add(pr);
+				}
+				return list;
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					if (rs != null) {
+						rs.close();
+					}
+					if (ps != null) {
+						ps.close();
+					}
+					if (con != null) {
+						con.close();
+					}
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+			}
+		}
+		return null;
+	}
+
 }

@@ -10,7 +10,9 @@ public interface IBill {
 	List<Bill> getAllByStatusID(String statusID);
 
 	boolean DeleteBillById(int id);
-	
-	boolean updateBillById(int idBill,int idStatus );
+
+	boolean updateBillById(int idBill, int idStatus);
+
+	List<Bill> getAllByIdBill(int ID);
 
 }

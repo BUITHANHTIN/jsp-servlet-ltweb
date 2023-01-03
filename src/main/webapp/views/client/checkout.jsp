@@ -87,7 +87,7 @@
 												<p style="font-size: 24; font-weight: bold;">Confirm
 													Payment</p>
 												<p>Information Of Order</p>
-													<a href="./FileKey/private.bin" download="Microsoft Edge PDF Document ">download</a>
+													<a href="./Pdf/file.pdf" download="file">Download</a>
 												<p>Enter your signature:</p>
 												<textarea id="textareaVerify" rows="5" style="width: 100%;"> </textarea>
 												<div style="display: flex;">
@@ -425,11 +425,8 @@
 						success : function(re) {
 							if(re==0){
 								$.notify('Dat hang that bai',"erro");
-							}else{
-							/* $.notify('Dat hang thanh cong',"success"); */
-							/* $("#listsize").html(0);
-							 var contend = document.getElementById("contend");
-							 contend.innerHTML = re;  */
+							}else if(re==1){
+						
 							window.location="http://localhost:8080/do-an-cuoi-ki/checkout";
 							$.notify('Dat hang thanh cong',"success");
 						}

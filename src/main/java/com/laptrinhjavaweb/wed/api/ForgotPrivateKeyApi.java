@@ -56,7 +56,7 @@ public class ForgotPrivateKeyApi extends HttpServlet {
 		response.setContentType("text/plain");
 
 		Account acount = (Account) SessionUtils.getInstance().getValue(request, "USERMODEL");
-		String path = "E:\\LAPTRINHDAIHOC\\New folder (2)\\jsp-servlet-ltweb-main\\src\\main\\webapp\\FileKey\\private.bin";
+		String path = "C:\\Users\\Admin\\Desktop\\Git-ATBM\\jsp-servlet-ltweb\\src\\main\\webapp\\Pdf\\private.bin";
 		Key key = new Key();
 		try {
 

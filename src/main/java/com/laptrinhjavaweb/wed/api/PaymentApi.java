@@ -5,7 +5,6 @@ import java.io.PrintWriter;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.servlet.GenericServlet;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -93,11 +92,8 @@ public class PaymentApi extends HttpServlet {
 		}
 
 		// TAO FILE PDF
-		String path = "E:\\LAPTRINHDAIHOC\\New folder (2)\\jsp-servlet-ltweb-main\\src\\main\\webapp\\FileKey\\file.pdf";
-		//String pathInfo =  request.getServletPath();
-      //  System.out.println("path Info: " + pathInfo);
-      //  Invoice invoice = new Invoice(pathInfo + "/" + "times.ttf");
-		CreatePdf createPdf = new CreatePdf(path);
+		String path = "C:\\Users\\Admin\\Desktop\\Git-ATBM\\jsp-servlet-ltweb\\src\\main\\webapp\\Pdf\\file.pdf";
+		CreatePdf createPdf = new CreatePdf();
 		createPdf.writeInvoice(path,filePdfService.findById(idBill));
 
 	}

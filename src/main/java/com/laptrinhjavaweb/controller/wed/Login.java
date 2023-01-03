@@ -144,7 +144,7 @@ public class Login extends HttpServlet {
 				acc.setIsAdmin(0);
 				acc.setPublicKey(Base64.getEncoder().encodeToString(Key.getPublicKey().getEncoded()));
 				// lÆ°u private
-				String path = "E:\\LAPTRINHDAIHOC\\New folder (2)\\jsp-servlet-ltweb-main\\src\\main\\webapp\\FileKey\\private.bin";
+				String path = "C:\\Users\\Admin\\Desktop\\Git-ATBM\\jsp-servlet-ltweb\\src\\main\\webapp\\Pdf\\private.bin";
 				try {
 					Key.savePrivateKey(Key.getPrivateKey(), path);
 				} catch (NoSuchAlgorithmException e3) {

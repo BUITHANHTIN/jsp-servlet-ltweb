@@ -41,17 +41,17 @@ public class Key {
 			throws InvalidKeyException, NoSuchAlgorithmException, SignatureException, IOException {
 		Signature s = Signature.getInstance("DSA");
 		s.initVerify(key);
-		String path = "E:\\kknk.pdf";
+		String path = "C:\\Users\\Admin\\Desktop\\Git-ATBM\\jsp-servlet-ltweb\\src\\main\\webapp\\Pdf\\file.pdf";
 		FileInputStream fis = new FileInputStream(path);
 		byte bytefile[] = new byte[fis.available()];
 		fis.close();
 		s.update(bytefile);
 		boolean check = s.verify(mahoa);
-		int re=0;
+		int re = 0;
 		if (check) {
-			re=1;
+			re = 1;
 		} else {
-			re=0;
+			re = 0;
 		}
 		return re;
 

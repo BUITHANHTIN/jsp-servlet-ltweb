@@ -73,10 +73,9 @@ public class VerifyApi extends HttpServlet {
 		}
 		if (re == 0) {
 			out.print(0);
-		} else {
-
+		} else if(re==1) {
+			out.print(1);
 			SessionUtils.getInstance().removeValue(request, "giohangs");
-
 			card.DeleteCard(acount.getId());
 		}
 

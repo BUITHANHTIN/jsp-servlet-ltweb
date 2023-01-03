@@ -26,15 +26,13 @@ public class CreatePdf {
 	PDFont font;
 
 	// Using the constructor to create a PDF with a blank page
-	public CreatePdf(String pathTtf) throws IOException {
+	public CreatePdf() throws IOException {
 		// Create Document
 		invc = new PDDocument();
 		// Create Blank Page
 		PDPage newpage = new PDPage();
 		// Add the blank page
 		invc.addPage(newpage);
-
-		// font = PDType0Font.load(invc, new File(pathTtf));
 		font = PDType0Font.load(invc,
 				PDDocument.class.getResourceAsStream("/org/apache/pdfbox/resources/ttf/LiberationSans-Regular.ttf"));
 	}
@@ -106,11 +104,6 @@ public class CreatePdf {
 			cs.showText("Count");
 			cs.endText();
 
-//			cs.beginText();
-//			cs.setFont(font, 14);
-//			cs.newLineAtOffset(410, 540);
-//			cs.showText("Price");
-//			cs.endText();
 
 			cs.beginText();
 			cs.setFont(font, 12);
@@ -141,17 +134,6 @@ public class CreatePdf {
 				cs.newLine();
 			}
 			cs.endText();
-
-//			cs.beginText();
-//			cs.setFont(font, 12);
-//			cs.setLeading(20f);
-//			cs.newLineAtOffset(410, 520);
-//			for (int i = 0; i < n; i++) {
-//				price = productPrice.get(i) * productQty.get(i);
-//				cs.showText(price.toString());
-//				cs.newLine();
-//			}
-//			cs.endText();
 
 			cs.beginText();
 			cs.setFont(font, 14);

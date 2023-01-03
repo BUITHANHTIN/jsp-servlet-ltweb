@@ -96,6 +96,9 @@
 														style="flex: 1; margin: auto; height: 40px; color: red; margin-top: 20px;" data-dismiss="modal">Cancel</button>
 													<button id="submitverify"
 														style="flex: 1; margin: auto; height: 40px; color: green; margin-top: 20px; margin-left: 10px;">Confirm</button>
+														<button id="submitForgotPrivateKey"
+														style="flex: 1; margin: auto; height: 40px; color: green; margin-top: 20px; margin-left: 10px;">Forgot private key</button>
+														
 												</div>
 
 											</div>
@@ -451,6 +454,20 @@
 					
 					 	
 					});
+					$("#submitForgotPrivateKey").click(function(){
+						$('.notifyjs-corner').empty();
+						$.notify('Private Key đã gửi qua email',"success");
+						$.ajax({
+						url : '/do-an-cuoi-ki/api-forgotprivate',
+						type : 'POST',
+						success : function(re) {
+							}
+					}); 
+					
+					 	
+					});
+					
+					
 				});
 	</script>
 	

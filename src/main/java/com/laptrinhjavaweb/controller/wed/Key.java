@@ -37,12 +37,13 @@ public class Key {
 
 	}
 
-	public static int verify(PublicKey key, byte[] mahoa)
+	public static int verify(PublicKey key, byte[] mahoa, String path)
 			throws InvalidKeyException, NoSuchAlgorithmException, SignatureException, IOException {
 		Signature s = Signature.getInstance("DSA");
 		s.initVerify(key);
-		String path = "C:\\Users\\Admin\\Desktop\\Git-ATBM\\jsp-servlet-ltweb\\src\\main\\webapp\\Pdf\\file.pdf";
-		FileInputStream fis = new FileInputStream(path);
+		path = path.substring(40, 51);
+		String path1 = "C:\\Users\\Admin\\Desktop\\Git-ATBM\\jsp-servlet-ltweb\\src\\main\\webapp\\Pdf\\" + path;
+		FileInputStream fis = new FileInputStream(path1);
 		byte bytefile[] = new byte[fis.available()];
 		fis.close();
 		s.update(bytefile);

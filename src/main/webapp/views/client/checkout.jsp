@@ -87,7 +87,9 @@
 												<p style="font-size: 24; font-weight: bold;">Confirm
 													Payment</p>
 												<p>Information Of Order</p>
-													<a href="./Pdf/file.pdf" download="file">Download</a>
+												 <a id="download" href="./Pdf/file.pdf"  dowload>Download</a> 
+												<!-- <a href="./Pdf/file.pdf" type="submit" class="btn mt-3 btn-orange w-100">Download</a>
+ -->												 <!-- <a href="C:\\Users\\Admin\\Desktop\\Git-ATBM\\jsp-servlet-ltweb\\src\\main\\webapp\\Pdf\\file.pdf" >Download</a>  -->
 												<p>Enter your signature:</p>
 												<textarea id="textareaVerify" rows="5" style="width: 100%;"> </textarea>
 												<div style="display: flex;">
@@ -364,7 +366,9 @@
 										tongtien : tongtien
 									},
 									success : function(re) {
+										document.getElementById("download").href="http://localhost:8080/do-an-cuoi-ki/Pdf/"+re+"file.pdf";
 										$("#modalMorong").modal('show');
+										
 									}
 								}); 
 								}
@@ -415,11 +419,13 @@
 					$("#submitverify").click(function(){
 						$('.notifyjs-corner').empty();
 						var verify = $("#textareaVerify").val();
+						var path=document.getElementById("download").href;
 						$.ajax({
 						url : '/do-an-cuoi-ki/api-verify',
 						type : 'POST',
 						data : {
 							verify:verify,
+							path:path
 							
 						},
 						success : function(re) {
@@ -429,10 +435,17 @@
 						
 							window.location="http://localhost:8080/do-an-cuoi-ki/checkout";
 							$.notify('Dat hang thanh cong',"success");
+							
 						}
 							}
 					}); 
-					
+						
+						
+							
+							 
+						
+						 	
+						});
 					 	
 					});
 					$("#submitForgotPrivateKey").click(function(){
@@ -452,7 +465,7 @@
 					});
 					
 					
-				});
+			
 	</script>
 	
 

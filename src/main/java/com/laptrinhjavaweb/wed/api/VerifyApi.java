@@ -61,13 +61,14 @@ public class VerifyApi extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/plain");
 		String verify = request.getParameter("verify").trim();
+		String path = request.getParameter("path");
 		Account acount = (Account) SessionUtils.getInstance().getValue(request, "USERMODEL");
 		List<Card> listCart = (List<Card>) SessionUtils.getInstance().getValue(request, "giohangs");
 		Account ac = accountService.findbyId(acount.getId());
 		int re = 0;
 		try {
 			byte[] m = Base64.getDecoder().decode(verify);
-			re = Key.verify(Key.publicKeyFromBase64(ac.getPublicKey()), m);
+			re = Key.verify(Key.publicKeyFromBase64(ac.getPublicKey()), m,path);
 		} catch (InvalidKeyException | NoSuchAlgorithmException | SignatureException | InvalidKeySpecException e) {
 			e.printStackTrace();
 		}

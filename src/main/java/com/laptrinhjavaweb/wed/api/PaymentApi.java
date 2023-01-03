@@ -70,7 +70,7 @@ public class PaymentApi extends HttpServlet {
 		Account ac = accountService.findbyId(acount.getId());
 
 		Bill new_bill = null;
-		int idBill=0;
+		int idBill = 0;
 		// trang thai cua hang(ch giao)
 		int idStatus = 1;
 		boolean check = true;
@@ -82,7 +82,7 @@ public class PaymentApi extends HttpServlet {
 				new_bill = new Bill(idOfCompute, user, phone, tongtien, listCart.size(), address, note, idStatus);
 				check = false;
 			}
-			 idBill = bill.insertBill(new_bill);
+			idBill = bill.insertBill(new_bill);
 			for (Card card : listCart) {
 				CT_Bill ct_Bill = new CT_Bill(idBill, card.getId(), card.getName(), card.getImage(),
 						String.valueOf(card.getPrice()), card.getCount());
@@ -90,11 +90,15 @@ public class PaymentApi extends HttpServlet {
 
 			}
 		}
-
 		// TAO FILE PDF
-		String path = "C:\\Users\\Admin\\Desktop\\Git-ATBM\\jsp-servlet-ltweb\\src\\main\\webapp\\Pdf\\file.pdf";
+
+		String path = "C:\\Users\\Admin\\Desktop\\Git-ATBM\\jsp-servlet-ltweb\\src\\main\\webapp\\Pdf\\";
+		path+=idBill+"file.pdf";
+		
 		CreatePdf createPdf = new CreatePdf();
-		createPdf.writeInvoice(path,filePdfService.findById(idBill));
+		createPdf.writeInvoice(path, filePdfService.findById(idBill));
+		out.print(idBill);
+		
 
 	}
 

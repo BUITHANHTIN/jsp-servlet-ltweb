@@ -2,7 +2,7 @@ package com.laptrinhjavaweb.model;
 
 public class CT_Bill {
 	int idBill, idProduct;
-	String name, image, phone, address;
+	String name, image;
 	String price;
 	int count;
 
@@ -16,21 +16,7 @@ public class CT_Bill {
 		this.count = count;
 	}
 
-	public String getPhone() {
-		return phone;
-	}
 
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
 
 	public int getIdBill() {
 		return idBill;

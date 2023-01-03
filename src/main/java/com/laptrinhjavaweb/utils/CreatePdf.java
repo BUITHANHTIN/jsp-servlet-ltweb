@@ -1,6 +1,5 @@
 package com.laptrinhjavaweb.utils;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,10 +14,6 @@ import com.laptrinhjavaweb.model.FilePdf;
 
 public class CreatePdf {
 	PDDocument invc;
-	int n;
-	Integer total = 0;
-	Integer price;
-
 	String name;
 	String phone;
 	String sumPrice;
@@ -26,8 +21,8 @@ public class CreatePdf {
 	List<String> listNameProduct = new ArrayList<>();
 	List<String> listPriceProduct = new ArrayList<>();
 	List<String> listCountProduct = new ArrayList<>();
-	String invoiceTitle = new String("BoardStore Invoice");
-	String subTitle = new String("Invoice");
+	String invoiceTitle = new String("Web ban hang online");
+	String subTitle = new String("Bill");
 	PDFont font;
 
 	// Using the constructor to create a PDF with a blank page
@@ -39,9 +34,10 @@ public class CreatePdf {
 		// Add the blank page
 		invc.addPage(newpage);
 
-		font = PDType0Font.load(invc, new File(pathTtf));
+		// font = PDType0Font.load(invc, new File(pathTtf));
+		font = PDType0Font.load(invc,
+				PDDocument.class.getResourceAsStream("/org/apache/pdfbox/resources/ttf/LiberationSans-Regular.ttf"));
 	}
-
 
 	public void writeInvoice(String filePath, FilePdf pdf) {
 		name = pdf.getName();
@@ -82,7 +78,7 @@ public class CreatePdf {
 			cs.endText();
 
 			cs.beginText();
-			cs.setFont(font, 14);
+			cs.setFont(font, 14); 
 			cs.setLeading(20f);
 			cs.newLineAtOffset(170, 610);
 			cs.showText(name);
@@ -100,13 +96,13 @@ public class CreatePdf {
 
 			cs.beginText();
 			cs.setFont(font, 14);
-			cs.newLineAtOffset(200, 540);
+			cs.newLineAtOffset(300, 540);
 			cs.showText(" Price");
 			cs.endText();
 
 			cs.beginText();
 			cs.setFont(font, 14);
-			cs.newLineAtOffset(310, 540);
+			cs.newLineAtOffset(410, 540);
 			cs.showText("Count");
 			cs.endText();
 
@@ -120,8 +116,8 @@ public class CreatePdf {
 			cs.setFont(font, 12);
 			cs.setLeading(20f);
 			cs.newLineAtOffset(80, 520);
-			for (int i = 0; i < listNameProduct.size(); i++) {
-				cs.showText(listNameProduct.get(i));
+			for (int i = 0; i < pdf.getListNameProduct().size(); i++) {
+				cs.showText(pdf.getListNameProduct().get(i));
 				cs.newLine();
 			}
 			cs.endText();
@@ -129,9 +125,9 @@ public class CreatePdf {
 			cs.beginText();
 			cs.setFont(font, 12);
 			cs.setLeading(20f);
-			cs.newLineAtOffset(200, 520);
-			for (int i = 0; i < listPriceProduct.size(); i++) {
-				cs.showText(listPriceProduct.get(i).toString());
+			cs.newLineAtOffset(300, 520);
+			for (int i = 0; i < pdf.getListPriceProduct().size(); i++) {
+				cs.showText(pdf.getListPriceProduct().get(i).toString());
 				cs.newLine();
 			}
 			cs.endText();
@@ -139,9 +135,9 @@ public class CreatePdf {
 			cs.beginText();
 			cs.setFont(font, 12);
 			cs.setLeading(20f);
-			cs.newLineAtOffset(310, 520);
-			for (int i = 0; i < listCountProduct.size(); i++) {
-				cs.showText(listCountProduct.get(i).toString());
+			cs.newLineAtOffset(410, 520);
+			for (int i = 0; i < pdf.getListCountProduct().size(); i++) {
+				cs.showText(pdf.getListCountProduct().get(i).toString());
 				cs.newLine();
 			}
 			cs.endText();
@@ -159,14 +155,14 @@ public class CreatePdf {
 
 			cs.beginText();
 			cs.setFont(font, 14);
-			cs.newLineAtOffset(310, (500 - (20 * listCountProduct.size())));
+			cs.newLineAtOffset(310, (500 - (20 * pdf.getListCountProduct().size())));
 			cs.showText("Total: ");
 			cs.endText();
 
 			cs.beginText();
 			cs.setFont(font, 14);
 			// Calculating where total is to be written using number of products
-			cs.newLineAtOffset(410, (500 - (20 * listCountProduct.size())));
+			cs.newLineAtOffset(410, (500 - (20 * pdf.getListCountProduct().size())));
 			cs.showText(sumPrice);
 			cs.endText();
 

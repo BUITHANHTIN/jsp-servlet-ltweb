@@ -85,8 +85,7 @@ public class CT_BillImp implements ICT_Bill {
 					bill.setImage(rs.getString("image"));
 					bill.setName(rs.getString("name"));
 					bill.setPrice(rs.getString("price"));
-					bill.setAddress(rs.getString("address"));
-					bill.setPhone(rs.getString("phone"));
+					
 					list.add(bill);
 				}
 				return list;
